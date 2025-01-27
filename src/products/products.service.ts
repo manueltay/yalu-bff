@@ -30,4 +30,28 @@ export class ProductsService {
       );
     }
   }
+
+  async deleteProductById(id: string) {
+    try {
+      const response = await axios.delete(`${this.managementApiUrl}/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new HttpException(
+        `Failed to delete product with ID ${id}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async addProduct(product: { name: string; description: string; price: number }) {
+    try {
+      const response = await axios.post(`${this.managementApiUrl}`, product);
+      return response.data;
+    } catch (error) {
+      throw new HttpException(
+        'Failed to add product to the management service',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
 }
